@@ -25,6 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-usinagem-1600.webp" imagesrcset="assets/img/hero-usinagem-640.webp 640w, assets/img/hero-usinagem-1000.webp 1000w, assets/img/hero-usinagem-1600.webp 1600w" imagesizes="(min-width:1024px) 62vw, 100vw" fetchpriority="high">
+<script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__ok)document.documentElement.classList.remove("js")},4000)</script>
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
@@ -212,7 +213,7 @@
 <!-- ======================= FAIXA DE DIFERENCIAIS ======================= -->
 <section class="strip" aria-label="Nossos diferenciais">
   <div class="wrap">
-    <div class="strip__grid">
+    <div class="strip__grid" data-stagger>
       <div class="strip__item">
         <svg class="ico strip__ico" aria-hidden="true"><use href="#i-gear"></use></svg>
         <div><h2 class="strip__t">Usinagem</h2><p class="strip__d">Fabricação de peças com alta precisão e qualidade.</p></div>
@@ -241,13 +242,13 @@
 <section class="section atuacao" aria-labelledby="t-atuacao">
   <div class="wrap">
     <div class="atuacao__grid">
-      <div class="reveal">
+      <div class="reveal reveal--left">
         <span class="eyebrow eyebrow--plain">Nossa atuação</span>
         <h2 class="h-lg atuacao__h2" id="t-atuacao">Do projeto<br><span class="atuacao__green">à execução.</span></h2>
         <p class="lead" style="margin-top:1.1rem">Contamos com equipe qualificada e estrutura moderna para entregar soluções completas em usinagem, caldeiraria e manutenção industrial.</p>
       </div>
 
-      <div class="atuacao__cards reveal">
+      <div class="atuacao__cards" data-stagger>
         <a class="card-foto" href="#servicos">
           <span class="card-foto__media"><img src="assets/img/usinagem-900.webp" srcset="assets/img/usinagem-560.webp 560w, assets/img/usinagem-900.webp 900w" sizes="(min-width:900px) 38vw, 100vw" width="900" height="675" loading="lazy" decoding="async" alt="Torno usinando peça metálica cilíndrica"></span>
           <span class="card-foto__bar"><span>Usinagem <svg class="ico" aria-hidden="true"><use href="#i-seta"></use></svg></span></span>
@@ -269,11 +270,11 @@
 <section class="section sobre" id="sobre" aria-labelledby="t-sobre">
   <div class="wrap">
     <div class="sobre__grid">
-      <figure class="sobre__fig reveal" style="margin:0">
+      <figure class="sobre__fig reveal reveal--left" style="margin:0">
         <img src="assets/img/sobre-oficina-1100.webp" srcset="assets/img/sobre-oficina-700.webp 700w, assets/img/sobre-oficina-1100.webp 1100w" sizes="(min-width:900px) 48vw, 100vw" width="1100" height="880" loading="lazy" decoding="async" alt="Oficina de usinagem com máquinas e bancada de trabalho">
       </figure>
 
-      <div class="sobre__txt reveal">
+      <div class="sobre__txt reveal reveal--right">
         <span class="eyebrow">Sobre a TAE</span>
         <h2 class="h-lg" id="t-sobre" style="margin-top:1.1rem">Engenharia e experiência a serviço da sua indústria.</h2>
         <div class="lead" style="margin-top:1.3rem">
@@ -282,9 +283,9 @@
           <p>Nosso objetivo é atender de forma rápida e eficiente, visando a satisfação e a fidelização, com transparência comercial e mantendo o diálogo em busca da melhor solução para cada projeto.</p>
         </div>
         <div class="stats">
-          <div><b>+20</b><span>Anos de experiência</span></div>
-          <div><b>3</b><span>Engenheiros fundadores</span></div>
-          <div><b>6</b><span>Segmentos atendidos</span></div>
+          <div><b data-count="20" data-prefix="+">+20</b><span>Anos de experiência</span></div>
+          <div><b data-count="3">3</b><span>Engenheiros fundadores</span></div>
+          <div><b data-count="6">6</b><span>Segmentos atendidos</span></div>
         </div>
         <a class="btn btn--outline" style="margin-top:1.8rem" href="#contato">Fale com a TAE <svg class="ico" aria-hidden="true"><use href="#i-seta"></use></svg></a>
       </div>
@@ -303,7 +304,7 @@
       </div>
     </div>
 
-    <div class="grid-cards reveal">
+    <div class="grid-cards" data-stagger>
       <article class="svc">
         <span class="svc__n">01</span>
         <svg class="ico svc__ico" aria-hidden="true"><use href="#i-gear"></use></svg>
@@ -395,7 +396,7 @@
     <h2 class="h-lg" id="t-processo" style="margin-top:1.1rem;max-width:20ch">Um processo claro, do contato à entrega.</h2>
     <p class="lead lead--light" style="margin-top:1rem;max-width:46rem">Transparência comercial e diálogo aberto em cada etapa, para chegar à melhor solução técnica dentro do seu prazo e do seu orçamento.</p>
 
-    <div class="passos reveal">
+    <div class="passos" data-stagger>
       <div class="passo"><b>01</b><h3>Contato</h3><p>Você descreve a necessidade por WhatsApp, telefone ou formulário.</p></div>
       <div class="passo"><b>02</b><h3>Análise técnica</h3><p>Avaliamos desenho, amostra ou equipamento e definimos o melhor caminho.</p></div>
       <div class="passo"><b>03</b><h3>Orçamento</h3><p>Proposta detalhada, com escopo, prazo e condições bem definidos.</p></div>
@@ -411,7 +412,7 @@
     <span class="eyebrow">Para quem atendemos</span>
     <h2 class="h-lg" id="t-segmentos" style="margin-top:1.1rem;max-width:22ch">Segmentos que já contam com a TAE.</h2>
 
-    <div class="seg-grid reveal">
+    <div class="seg-grid" data-stagger>
       <div class="seg"><svg class="ico" aria-hidden="true"><use href="#i-energia"></use></svg><div><h3>Energia</h3><p>Manutenção e fabricação de componentes para geração e transmissão.</p></div></div>
       <div class="seg"><svg class="ico" aria-hidden="true"><use href="#i-quimica"></use></svg><div><h3>Petroquímico</h3><p>Caldeiraria, tubulações e peças para plantas químicas e refino.</p></div></div>
       <div class="seg"><svg class="ico" aria-hidden="true"><use href="#i-aco"></use></svg><div><h3>Siderúrgico</h3><p>Peças de reposição e manutenção de equipamentos de grande porte.</p></div></div>
@@ -439,7 +440,7 @@
       <button class="filtro" type="button" data-filtro="caldeiraria" aria-pressed="false">Caldeiraria</button>
     </div>
 
-    <div class="galeria" id="galeria" data-inicial="9">
+    <div class="galeria" id="galeria" data-inicial="9" data-stagger>
       <figure data-cat="caldeiraria">
         <img src="assets/img/projetos/caldeiraria-01-800.webp" srcset="assets/img/projetos/caldeiraria-01-480.webp 480w, assets/img/projetos/caldeiraria-01-800.webp 800w" sizes="(min-width:1024px) 32vw, (min-width:640px) 48vw, 100vw" width="800" height="600" loading="lazy" decoding="async" alt="Estrutura treliçada pintada de branco">
         <figcaption><b>Caldeiraria</b><h3>Estrutura treliçada pintada de branco</h3></figcaption>
@@ -590,7 +591,7 @@
     <span class="eyebrow">Clientes e parceiros</span>
     <h2 class="h-lg" id="t-parceiros" style="margin-top:1.1rem;max-width:24ch">Empresas que confiam no trabalho da TAE.</h2>
 
-    <div class="parceiros__grid reveal">
+    <div class="parceiros__grid" data-stagger>
       <div class="parceiro"><img src="assets/img/parceiros/bunge.svg" width="200" height="50" loading="lazy" decoding="async" alt="Bunge"></div>
       <div class="parceiro"><img src="assets/img/parceiros/costa-brasil.webp" width="217" height="113" loading="lazy" decoding="async" alt="Costa Brasil"></div>
       <div class="parceiro"><img src="assets/img/parceiros/avb.webp" width="196" height="88" loading="lazy" decoding="async" alt="AVB - Aço Verde do Brasil"></div>
@@ -614,7 +615,7 @@
     <span class="eyebrow">Por que a TAE</span>
     <h2 class="h-lg" id="t-porque" style="margin-top:1.1rem;max-width:26ch">Agilidade, transparência e engenharia na origem.</h2>
 
-    <div class="dif-grid reveal">
+    <div class="dif-grid" data-stagger>
       <div class="dif"><svg class="ico" aria-hidden="true"><use href="#i-equipe"></use></svg><h3>Engenharia na origem</h3><p>Fundada por três engenheiros com mais de 20 anos de experiência no setor industrial.</p></div>
       <div class="dif"><svg class="ico" aria-hidden="true"><use href="#i-raio"></use></svg><h3>Atendimento ágil</h3><p>Resposta rápida a orçamentos e disponibilidade para atendimentos emergenciais.</p></div>
       <div class="dif"><svg class="ico" aria-hidden="true"><use href="#i-dialogo"></use></svg><h3>Transparência comercial</h3><p>Diálogo aberto do orçamento à entrega, sem surpresas no escopo ou no prazo.</p></div>
@@ -650,7 +651,7 @@
     <h2 class="h-lg" id="t-contato" style="margin-top:1.1rem;max-width:22ch">Vamos conversar sobre o seu projeto.</h2>
 
     <div class="contato__grid" style="margin-top:2.6rem">
-      <form class="form reveal" id="form-orcamento" novalidate>
+      <form class="form reveal reveal--left" id="form-orcamento" novalidate>
         <div class="form__row">
           <div class="campo">
             <label for="f-nome">Nome</label>
@@ -693,7 +694,7 @@
         <p class="form__nota">Ao enviar, abrimos o WhatsApp da TAE com sua mensagem já preenchida. Nenhum dado é armazenado neste site.</p>
       </form>
 
-      <div class="reveal">
+      <div class="reveal reveal--right">
         <div class="infos">
           <div class="info">
             <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"></use></svg>

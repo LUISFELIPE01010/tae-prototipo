@@ -65,22 +65,66 @@
     secoes.forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------- 5. Reveal ao entrar na tela ---------- */
-  var alvos = $$(".reveal");
-  if (alvos.length) {
-    if ("IntersectionObserver" in window) {
-      var rev = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          en.target.classList.add("is-in");
-          obs.unobserve(en.target);
-        });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-      alvos.forEach(function (el) { rev.observe(el); });
-    } else {
-      alvos.forEach(function (el) { el.classList.add("is-in"); });
-    }
+  /* ---------- 5. Animacoes de entrada ---------- */
+  window.__ok = true; // avisa o <head> que o script carregou (senao a classe .js e removida)
+  var reduz = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var animar = "IntersectionObserver" in window && !reduz;
+
+  var entradas = $$(
+    ".reveal, [data-stagger] > *, .section > .wrap > .eyebrow, .section > .wrap > h2, " +
+    ".section > .wrap > .sec-head__row, .section > .wrap > .lead"
+  );
+
+  if (!animar) {
+    entradas.forEach(function (el) { el.classList.add("is-in"); });
+  } else {
+    // posicao do item na sua linha da grade (0, 1, 2...): so os vizinhos de linha sao escalonados
+    var colunaNaLinha = function (el) {
+      var pai = el.parentNode;
+      if (!pai || !pai.hasAttribute("data-stagger")) return;
+      var i = 0;
+      for (var s = el.previousElementSibling; s; s = s.previousElementSibling) {
+        if (!s.hidden && Math.abs(s.offsetTop - el.offsetTop) < 6) i++;
+      }
+      el.style.setProperty("--i", i);
+    };
+
+    var rev = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        colunaNaLinha(en.target);
+        en.target.classList.add("is-in");
+        obs.unobserve(en.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    entradas.forEach(function (el) { rev.observe(el); });
   }
+
+  // numeros que contam de 0 ate o valor quando aparecem
+  $$("[data-count]").forEach(function (el) {
+    var alvo = parseFloat(el.getAttribute("data-count"));
+    var pre = el.getAttribute("data-prefix") || "";
+    var suf = el.getAttribute("data-suffix") || "";
+    if (!animar || isNaN(alvo)) return;
+
+    el.textContent = pre + "0" + suf;
+    var cont = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        obs.unobserve(en.target);
+        var inicio = null;
+        var duracao = 1400;
+        var passo = function (t) {
+          if (inicio === null) inicio = t;
+          var p = Math.min((t - inicio) / duracao, 1);
+          el.textContent = pre + Math.round(alvo * (1 - Math.pow(1 - p, 3))) + suf;
+          if (p < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      });
+    }, { threshold: 0.6 });
+    cont.observe(el);
+  });
 
   /* ---------- 6. Galeria de projetos: filtro + "Ver mais" ---------- */
   var botoes = $$(".filtro");

@@ -155,3 +155,10 @@ trocando apenas o trecho final de `assets/js/main.js`.
   link "pular para o conteúdo" e respeito a "reduzir movimento".
 - **Interações** — menu fixo com indicador da seção atual, menu sanfona no celular,
   filtro na galeria de projetos, animações de entrada e botão flutuante de WhatsApp.
+- **Animações de entrada** — os blocos aparecem conforme a página é rolada: itens de grade entram em
+  sequência (um após o outro na mesma linha), textos e fotos entram por lados opostos, os cards de
+  "Nossa Atuação" deslizam já inclinados, e os números do "Sobre" contam de 0 até o valor. Na hero só
+  o texto anima; a foto fica parada. Cada elemento anima uma vez. Tudo é CSS + ~1,5 kB de JavaScript.
+  Para animar um bloco novo, use a classe `reveal` (opcional: `reveal--left` ou `reveal--right`) ou o
+  atributo `data-stagger` no contêiner de uma grade. Quem usa "reduzir movimento" no sistema vê tudo
+  sem animação, e se o JavaScript falhar o conteúdo continua visível.
