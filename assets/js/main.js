@@ -82,21 +82,47 @@
     }
   }
 
-  /* ---------- 6. Filtro da galeria de projetos ---------- */
+  /* ---------- 6. Galeria de projetos: filtro + "Ver mais" ---------- */
   var botoes = $$(".filtro");
   var galeria = $("#galeria");
+  var btnMais = $("#btn-mais");
 
   if (botoes.length && galeria) {
     var figuras = $$("figure", galeria);
+    var passo = parseInt(galeria.getAttribute("data-inicial"), 10) || 9;
+    var categoria = "todos";
+    var limite = passo;
+
+    var desenhar = function () {
+      var visiveis = 0;
+      var total = 0;
+      figuras.forEach(function (f) {
+        var combina = categoria === "todos" || f.getAttribute("data-cat") === categoria;
+        if (combina) total++;
+        var mostra = combina && visiveis < limite;
+        if (mostra) visiveis++;
+        f.hidden = !mostra;
+      });
+      if (btnMais) btnMais.parentNode.hidden = visiveis >= total;
+    };
+
     botoes.forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var cat = btn.getAttribute("data-filtro");
+        categoria = btn.getAttribute("data-filtro");
+        limite = passo;
         botoes.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-        figuras.forEach(function (f) {
-          f.hidden = !(cat === "todos" || f.getAttribute("data-cat") === cat);
-        });
+        desenhar();
       });
     });
+
+    if (btnMais) {
+      btnMais.addEventListener("click", function () {
+        limite += passo;
+        desenhar();
+      });
+    }
+
+    desenhar();
   }
 
   /* ---------- 7. Mapa sob demanda ---------- */

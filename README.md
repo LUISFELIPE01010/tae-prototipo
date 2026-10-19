@@ -51,7 +51,7 @@ tae-site/
         ├── hero-*.webp                foto da hero (3 tamanhos)
         ├── usinagem / caldeiraria / manutencao
         ├── sobre-oficina, faixa-industrial
-        ├── projetos/                  6 fotos da galeria
+        ├── projetos/                  34 fotos reais da galeria
         └── parceiros/                 13 logos de clientes
 ```
 
@@ -77,10 +77,12 @@ Para trocar, basta substituir o arquivo mantendo o **mesmo nome e a mesma propor
 | `manutencao-900/560.webp` | 4:3 | card "Manutenção Industrial" |
 | `sobre-oficina-1100/700.webp` | 5:4 | seção "Sobre a TAE" |
 | `faixa-industrial-1920/1100.webp` | 21:9 | faixa "Como trabalhamos" |
-| `projetos/p1…p6-800/480.webp` | 4:3 | galeria de projetos |
 
-Depois de trocar as fotos da galeria, remova a frase
-*"Imagens ilustrativas — serão substituídas por fotos reais dos projetos da TAE."* no final da seção Projetos.
+A galeria de **Projetos** já usa fotos reais da TAE (34 fotos em `projetos/`, 27 de caldeiraria e 7 de
+usinagem, cada uma em 800 px e 480 px, proporção 4:3). Para adicionar uma foto nova, gere os dois
+tamanhos, copie para `assets/img/projetos/` e acrescente um `<figure>` em `index.html` dentro de
+`<div id="galeria">`, com `data-cat="usinagem"` ou `data-cat="caldeiraria"`. A galeria mostra 9 fotos
+por vez; o botão "Ver mais projetos" revela as demais (o tamanho do lote está em `data-inicial`).
 
 ### 2. Logo
 A logo foi extraída do arquivo enviado. Se houver o original em vetor (`.ai`, `.svg`, `.eps`),
