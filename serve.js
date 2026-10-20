@@ -7,7 +7,7 @@ const path = require('path');
 const zlib = require('zlib');
 
 const ROOT = path.resolve(__dirname, process.argv[2] || '.');
-const PORT = Number(process.env.PORT) || (process.argv[2] ? 4175 : 4173);
+const PORT = Number(process.argv[3]) || Number(process.env.PORT) || (process.argv[2] ? 4175 : 4173);
 const TIPOS = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8',
