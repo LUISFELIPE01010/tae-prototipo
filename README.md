@@ -1,35 +1,68 @@
 # Site TAE — Usinagem, Caldeiraria e Manutenção Industrial
 
-Site institucional estático (HTML + CSS + JS puro). **Sem build, sem dependências, sem framework.**
-Para publicar, basta copiar a pasta inteira para qualquer hospedagem.
+Site institucional estático (HTML + CSS + JS puro), sem framework e **sem nenhuma dependência para instalar**.
+Os arquivos-fonte (`index.html`, `assets/`) são editados normalmente. Um script de build (`build.js`, só Node)
+gera a pasta `dist/` otimizada que a Vercel publica.
 
 ---
 
 ## Como visualizar
 
-**Opção 1 — abrir direto:** dê duplo clique em `index.html`.
-(O mapa do Google e as fontes precisam de internet; o resto funciona offline.)
-
-**Opção 2 — servidor local** (recomendado, reproduz o comportamento real):
+**Fonte, como está (para editar):**
 
 ```bash
 node serve.js
 ```
 
-Depois abra `http://localhost:4173`.
+Abra `http://localhost:4173`.
+
+**Versão otimizada, igual à que vai ao ar** (CSS crítico inline, arquivos com hash, Brotli):
+
+```bash
+node build.js
+node serve.js dist
+```
+
+Abra `http://localhost:4175`.
 
 ---
 
-## Como publicar
+## Como publicar (Vercel)
 
-| Hospedagem | Como fazer |
+O `vercel.json` já configura tudo: roda `npm run build` (= `node build.js`) e publica a pasta `dist/`.
+Cada `git push` na `main` republica o site sozinho. Não é preciso mexer nas configurações do projeto na Vercel.
+
+### O que o build faz
+
+| Etapa | Por quê |
 |---|---|
-| **Netlify / Vercel** | Arraste a pasta `tae-site` na área de deploy. Sem configuração. |
-| **Hospedagem comum (cPanel, Hostgator, Locaweb…)** | Envie o conteúdo da pasta para `public_html` via FTP. |
-| **GitHub Pages** | Suba a pasta no repositório e ative o Pages na branch principal. |
+| **CSS crítico inline** — as seções 1–7 e 19 do `styles.css` (cabeçalho, hero, faixa, Nossa Atuação e animações) são minificadas e vão dentro do HTML; o resto (`rest.css`) carrega sem bloquear a primeira tela | tira o CSS do caminho crítico da renderização |
+| **Hash no nome dos arquivos** (`hero-usinagem-800.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
+| **Confere o JSON-LD** e compara o FAQ do schema com o FAQ visível | avisa (sem travar o deploy) se um dos dois ficou diferente |
 
-Depois de publicar, troque o domínio de exemplo `https://www.taeusinagem.com.br/` nos seguintes pontos:
-`index.html` → tags `canonical`, `og:url`; `robots.txt`; `sitemap.xml`.
+Por causa do hash, **trocar uma foto continua simples**: substitua o arquivo mantendo o mesmo nome e faça o push.
+O build gera o nome novo e o navegador baixa a versão atualizada.
+
+### Domínio definitivo (importante)
+
+O `canonical`, o `og:image`, o JSON-LD, o `robots.txt`, o `sitemap.xml` e o `llms.txt` usam o domínio de exemplo
+**`https://www.taeusinagem.com.br`**. Quando o domínio real estiver no ar, **não é preciso editar arquivo nenhum**:
+na Vercel, em *Settings → Environment Variables*, crie
+
+```
+SITE_URL = https://www.dominio-real.com.br
+```
+
+e republique. O build troca o domínio em todos esses pontos. (Para testar localmente: `SITE_URL=https://exemplo.com node build.js`.)
+
+> Enquanto o domínio definitivo não existir, a prévia de link no WhatsApp/Facebook não mostra a imagem
+> (ela aponta para o domínio de exemplo), e o Google pode indexar o endereço `.vercel.app` do protótipo.
+
+### Estilos: como editar sem quebrar o build
+
+O `assets/css/styles.css` é dividido em seções numeradas (`/* ---------- 5. Hero ---------- */`).
+**Não renumere nem remova os marcadores**: o build usa os números para separar o CSS crítico do restante.
+Seções críticas = 1 a 7 e 19. Novas seções entram no final (a 20 é o FAQ) e carregam depois da primeira tela.
 
 ---
 
@@ -37,21 +70,25 @@ Depois de publicar, troque o domínio de exemplo `https://www.taeusinagem.com.br
 
 ```
 tae-site/
-├── index.html              página única com todas as seções
-├── robots.txt
+├── index.html              página única com todas as seções (inclui JSON-LD e FAQ)
+├── build.js                gera dist/ (CSS crítico, hash nos arquivos, domínio)
+├── vercel.json             build, cache de 1 ano em /assets e cabeçalhos de segurança
+├── package.json            só declara o script "build" (nenhuma dependência)
+├── robots.txt              libera buscadores e crawlers de IA (GPTBot, PerplexityBot, ClaudeBot…)
 ├── sitemap.xml
-├── serve.js                servidor local para desenvolvimento
+├── llms.txt                resumo da empresa em texto simples, para IAs
+├── serve.js                servidor local (node serve.js | node serve.js dist)
 └── assets/
-    ├── css/styles.css      todo o estilo (tokens de cor no topo do arquivo)
-    ├── js/main.js          menu, scrollspy, filtro de projetos, formulário
+    ├── css/styles.css      todo o estilo, em seções numeradas (tokens de cor no topo)
+    ├── js/main.js          menu, animações, contadores, filtro de projetos, formulário
+    ├── fonts/              Inter (latin, variável) hospedada no próprio site
     └── img/
-        ├── logo-tae-mark.webp         logo para fundo claro
-        ├── logo-tae-mark-light.webp   logo para fundo escuro (rodapé)
-        ├── logo-tae-completo.webp     logo com os 3 dizeres
-        ├── hero-*.webp                foto da hero (3 tamanhos)
-        ├── usinagem / caldeiraria / manutencao
+        ├── logo-tae-mark*.webp        logo (3 tamanhos; versão clara para o rodapé)
+        ├── logo-tae-completo.webp     logo com os 3 dizeres (usada no schema)
+        ├── hero-usinagem-*.webp/.avif foto da hero (5 tamanhos)
+        ├── usinagem / caldeiraria / manutencao   cards de Nossa Atuação (3 tamanhos)
         ├── sobre-oficina, faixa-industrial
-        ├── projetos/                  34 fotos reais da galeria
+        ├── projetos/                  34 fotos reais da galeria (.webp + .avif)
         └── parceiros/                 13 logos de clientes
 ```
 
@@ -67,22 +104,31 @@ Todas as fotos atuais são de **banco de imagens gratuito (Pexels)** e servem de
 > composição foram reproduzidos; o conteúdo das fotos é o que muda. Trocando pelos arquivos reais da
 > TAE nos mesmos nomes, o resultado fica igual à referência.
 
-Para trocar, basta substituir o arquivo mantendo o **mesmo nome e a mesma proporção**:
+Cada foto existe em **vários tamanhos** e em **dois formatos** (`.avif`, que os navegadores modernos usam,
+e `.webp`, de reserva). O navegador escolhe sozinho o tamanho e o formato certos. Para trocar uma foto,
+gere **todos os tamanhos nos dois formatos**, com o mesmo nome e a mesma proporção. Trocar só o `.webp`
+deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, me envie as fotos novas e eu gero tudo.)*
 
-| Arquivo | Proporção | Onde aparece |
+| Arquivos | Proporção | Onde aparece |
 |---|---|---|
-| `hero-usinagem-1600/1000/640.webp` | 4:3 | topo do site |
-| `usinagem-900/560.webp` | 4:3 | card "Usinagem" |
-| `caldeiraria-900/560.webp` | 4:3 | card "Caldeiraria" |
-| `manutencao-900/560.webp` | 4:3 | card "Manutenção Industrial" |
-| `sobre-oficina-1100/700.webp` | 5:4 | seção "Sobre a TAE" |
-| `faixa-industrial-1920/1100.webp` | 21:9 | faixa "Como trabalhamos" |
+| `hero-usinagem-640/800/1000/1280/1600` | 16:9 | topo do site |
+| `usinagem-480/700/900` | 4:3 | card "Usinagem" |
+| `caldeiraria-480/700/900` | 4:3 | card "Caldeiraria" |
+| `manutencao-480/700/900` | 4:3 | card "Manutenção Industrial" |
+| `sobre-oficina-480/700/1100` | 5:4 | seção "Sobre a TAE" |
+| `faixa-industrial-720/1100/1920` | 21:9 | faixa "Como trabalhamos" |
+| `logo-tae-mark(-light)-120/200` e o de 440 | — | logo (só `.webp`, tem transparência) |
 
 A galeria de **Projetos** já usa fotos reais da TAE (34 fotos em `projetos/`, 27 de caldeiraria e 7 de
-usinagem, cada uma em 800 px e 480 px, proporção 4:3). Para adicionar uma foto nova, gere os dois
-tamanhos, copie para `assets/img/projetos/` e acrescente um `<figure>` em `index.html` dentro de
-`<div id="galeria">`, com `data-cat="usinagem"` ou `data-cat="caldeiraria"`. A galeria mostra 9 fotos
-por vez; o botão "Ver mais projetos" revela as demais (o tamanho do lote está em `data-inicial`).
+usinagem, cada uma em 800 px e 480 px, proporção 4:3, em `.webp` e `.avif`). Para adicionar uma foto nova,
+gere os dois tamanhos nos dois formatos, copie para `assets/img/projetos/` e acrescente um `<figure>` em
+`index.html` dentro de `<div id="galeria">`, com `data-cat="usinagem"` ou `data-cat="caldeiraria"`
+(copie um `<figure>` existente, que já traz o `<picture>`). A galeria mostra 9 fotos por vez; o botão
+"Ver mais projetos" revela as demais (o tamanho do lote está em `data-inicial`).
+
+### Perguntas frequentes e schema
+O FAQ fica em `<section id="faq">`. O mesmo texto também está no JSON-LD do `<head>` (`FAQPage`). Ao editar uma
+pergunta ou resposta, altere **os dois lugares com o texto idêntico**; o `node build.js` avisa se ficarem diferentes.
 
 ### 2. Logo
 A logo foi extraída do arquivo enviado. Se houver o original em vetor (`.ai`, `.svg`, `.eps`),

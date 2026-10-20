@@ -1,0 +1,11 @@
+{
+  "name": "tae-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site institucional da TAE - Usinagem, Caldeiraria e Manutenção Industrial (Cubatão/SP). Estático; o build só gera a pasta dist/.",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node serve.js",
+    "preview": "node build.js && node serve.js dist"
+  }
+}

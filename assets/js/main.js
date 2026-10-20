@@ -11,11 +11,21 @@
   if (ano) ano.textContent = new Date().getFullYear();
 
   /* ---------- 2. Sombra do header ao rolar ---------- */
+  // Um marcador de 12px no topo da pagina (#sentinela-topo) avisa quando a pagina saiu do topo.
+  // Assim nao lemos window.scrollY (leitura de geometria que forca o navegador a recalcular o layout
+  // na hora: era o "reflow forcado" apontado pelo PageSpeed) nem usamos o evento de scroll.
   var header = $("#header");
-  if (header) {
-    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 12); };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+  var sentinela = $("#sentinela-topo");
+  if (header && sentinela && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      header.classList.toggle("is-scrolled", !entries[entries.length - 1].isIntersecting);
+    }).observe(sentinela);
+  } else if (header) {
+    var agendado = false;
+    var atualizar = function () { agendado = false; header.classList.toggle("is-scrolled", window.pageYOffset > 12); };
+    window.addEventListener("scroll", function () {
+      if (!agendado) { agendado = true; requestAnimationFrame(atualizar); }
+    }, { passive: true });
   }
 
   /* ---------- 3. Menu mobile ---------- */
@@ -78,23 +88,33 @@
   if (!animar) {
     entradas.forEach(function (el) { el.classList.add("is-in"); });
   } else {
-    // posicao do item na sua linha da grade (0, 1, 2...): so os vizinhos de linha sao escalonados
+    // posicao do item na sua linha da grade (0, 1, 2...): so os vizinhos de linha sao escalonados.
+    // So LE a geometria (devolve o indice); quem escreve no DOM e o observador, depois de ler tudo.
     var colunaNaLinha = function (el) {
       var pai = el.parentNode;
-      if (!pai || !pai.hasAttribute("data-stagger")) return;
+      if (!pai || !pai.hasAttribute("data-stagger")) return null;
       var i = 0;
+      var topo = el.offsetTop;
       for (var s = el.previousElementSibling; s; s = s.previousElementSibling) {
-        if (!s.hidden && Math.abs(s.offsetTop - el.offsetTop) < 6) i++;
+        if (!s.hidden && Math.abs(s.offsetTop - topo) < 6) i++;
       }
-      el.style.setProperty("--i", i);
+      return i;
     };
 
     var rev = new IntersectionObserver(function (entries, obs) {
+      var chegaram = [];
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
-        colunaNaLinha(en.target);
-        en.target.classList.add("is-in");
+        chegaram.push(en.target);
         obs.unobserve(en.target);
+      });
+      if (!chegaram.length) return;
+      // fase 1: leitura de tudo (sem escrever nada entre as leituras: evita reflow forcado)
+      var indices = chegaram.map(colunaNaLinha);
+      // fase 2: escrita de tudo
+      chegaram.forEach(function (el, k) {
+        if (indices[k] !== null) el.style.setProperty("--i", indices[k]);
+        el.classList.add("is-in");
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
     entradas.forEach(function (el) { rev.observe(el); });
@@ -107,11 +127,12 @@
     var suf = el.getAttribute("data-suffix") || "";
     if (!animar || isNaN(alvo)) return;
 
-    el.textContent = pre + "0" + suf;
+    // o HTML ja traz o valor final (rastreadores leem o numero certo); so zeramos na hora de contar
     var cont = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         obs.unobserve(en.target);
+        el.textContent = pre + "0" + suf;
         var inicio = null;
         var duracao = 1400;
         var passo = function (t) {

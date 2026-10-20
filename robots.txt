@@ -1,4 +1,36 @@
+# TAE Usinagem - rastreamento liberado para buscadores e para crawlers de IA.
 User-agent: *
+Allow: /
+
+# Crawlers de IA (permitem que a TAE seja citada em ChatGPT, Perplexity, Claude, Gemini e Apple Intelligence)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://www.taeusinagem.com.br/sitemap.xml
