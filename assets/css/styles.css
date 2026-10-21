@@ -119,6 +119,10 @@ p{margin:0}
 .brand__rule{width:1.5px;align-self:center;height:2.9em;background:#1a1a1a;flex:none}
 .brand__txt{display:grid;gap:0;font-size:.6rem;font-weight:700;letter-spacing:.05em;line-height:1.5;
   text-transform:uppercase;color:#111;white-space:nowrap}
+/* telas muito estreitas (320-359px): so o simbolo, para o botao do menu nao sair da tela */
+@media (max-width:359px){
+  .brand__rule,.brand__txt{display:none}
+}
 @media (min-width:1024px){
   .brand__mark{height:78px}
   .brand__txt{font-size:.78rem;letter-spacing:.045em}
@@ -172,7 +176,7 @@ p{margin:0}
 .drawer a.drawer__link{display:block;padding:.95rem .2rem;font-weight:600;border-bottom:1px solid var(--line)}
 .drawer .btn{margin-top:1.1rem}
 .drawer__info{margin-top:.9rem;display:grid;gap:.5rem;font-size:.85rem;color:var(--muted-light)}
-.drawer__info a{display:flex;gap:.6rem;align-items:center}
+.drawer__info a{display:flex;gap:.6rem;align-items:center;min-height:44px}
 .drawer__info svg{width:1.05rem;height:1.05rem;color:var(--g-700)}
 
 @media (min-width:1100px){
@@ -236,7 +240,8 @@ p{margin:0}
 
 /* ---------- 6. Faixa de diferenciais ---------- */
 .strip{background:#f6f6f6;border-bottom:1px solid #e8e8e8}
-.strip__grid{display:grid;grid-template-columns:repeat(2,1fr)}
+/* minmax(0,1fr): as colunas nunca passam de metade da tela, mesmo com texto longo */
+.strip__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .strip__item{position:relative;display:flex;gap:1rem;align-items:center;padding:1.4rem .9rem;border-bottom:1px solid var(--line)}
 .strip__item + .strip__item{border-left:1px solid var(--line)}
 .strip__item:nth-child(odd){border-left:0}
@@ -244,6 +249,11 @@ p{margin:0}
 .strip__ico{width:38px;height:38px;flex:none;color:var(--g-900);stroke-width:2}
 .strip__t{font-size:.95rem;font-weight:700;letter-spacing:-.01em;color:#111}
 .strip__d{margin-top:.3rem;font-size:.85rem;line-height:1.45;color:#565656}
+/* telas de 320-359px: icone acima do texto, para as duas colunas caberem sem alargar a pagina */
+@media (max-width:359px){
+  .strip__item{flex-direction:column;align-items:flex-start;gap:.55rem;padding:1.15rem .8rem}
+  .strip__t{font-size:.9rem}
+}
 @media (min-width:900px){
   .strip__grid{grid-template-columns:repeat(5,1fr)}
   /* na referencia os separadores sao tracos curtos, nao linhas de ponta a ponta */
@@ -302,15 +312,22 @@ p{margin:0}
 
 /* ---------- 8. Sobre ---------- */
 .sobre{background:var(--mist)}
-.sobre__grid{display:grid;gap:2.5rem}
+.sobre__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
 .sobre__fig{position:relative}
 .sobre__fig img{width:100%;aspect-ratio:5/4;object-fit:cover}
 .sobre__fig::after{content:"";position:absolute;right:-14px;bottom:-14px;width:110px;height:110px;border-right:5px solid var(--g-500);border-bottom:5px solid var(--g-500)}
 .sobre__txt p + p{margin-top:1rem}
-.stats{margin-top:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.stats{margin-top:2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line)}
 .stats div{background:var(--mist);padding:1.1rem .6rem;text-align:center}
 .stats b{display:block;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--g-700);line-height:1}
 .stats span{display:block;margin-top:.4rem;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-light)}
+/* telas de 320-359px: as 3 estatisticas viram uma lista (numero ao lado do rotulo), sem apertar o texto */
+@media (max-width:359px){
+  .stats{grid-template-columns:minmax(0,1fr)}
+  .stats div{display:flex;align-items:baseline;gap:.9rem;text-align:left;padding:.9rem 1rem}
+  .stats b{min-width:3.4rem}
+  .stats span{margin-top:0}
+}
 @media (min-width:900px){
   .sobre__grid{grid-template-columns:1fr 1.05fr;gap:3.5rem;align-items:center}
 }
@@ -370,12 +387,14 @@ p{margin:0}
 }
 .filtro:hover{border-color:var(--g-500);color:#fff}
 .filtro[aria-pressed="true"]{background:var(--g-600);border-color:var(--g-600);color:#fff}
+/* area de toque de 44px nos botoes do filtro (tablet e celular) */
+@media (max-width:1023px){ .filtro{padding:.78rem 1.15rem} }
 .galeria{margin-top:1.8rem;display:grid;gap:.75rem}
 .galeria figure{position:relative;margin:0;overflow:hidden;background:var(--ink-2)}
 .galeria img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
 .galeria figure:hover img{transform:scale(1.06)}
 .galeria figcaption{position:absolute;inset:auto 0 0;padding:3.5rem 1.2rem 1.1rem;background:linear-gradient(to top,rgba(10,10,10,.95),rgba(10,10,10,0))}
-.galeria figcaption b{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g-400)}
+.galeria figcaption b{display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g-400)}
 .galeria figcaption h3{margin-top:.35rem;font-size:1.15rem}
 .galeria figcaption p{margin-top:.25rem;font-size:.82rem;color:var(--muted-dark)}
 .nota{margin-top:1.3rem;font-size:.78rem;color:rgba(255,255,255,.45)}
@@ -442,6 +461,10 @@ p{margin:0}
 .info b{display:block;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-light)}
 .info span,.info a{display:block;margin-top:.25rem;font-size:.95rem;font-weight:600;line-height:1.5}
 .info a:hover{color:var(--g-700)}
+/* links de contato com area de toque de 44px (tablet e celular) */
+@media (max-width:1023px){
+  .info a{display:flex;align-items:center;min-height:44px;margin-top:0}
+}
 .mapa{margin-top:1rem;border:1px solid var(--line);line-height:0;background:var(--mist)}
 .mapa iframe{width:100%;height:280px;border:0;display:block;filter:grayscale(.25)}
 
@@ -485,9 +508,14 @@ p{margin:0}
 .footer li a,.footer li span{font-size:.88rem;line-height:1.5}
 .footer li a:hover{color:var(--g-400)}
 .footer .social{margin-top:1.2rem;display:flex;gap:.6rem}
-.footer .social a{display:grid;place-items:center;width:40px;height:40px;border:1px solid var(--line-dark);border-radius:50%;transition:.18s ease}
+.footer .social a{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line-dark);border-radius:50%;transition:.18s ease}
 .footer .social a:hover{background:var(--g-700);border-color:var(--g-700);color:#fff}
 .footer .social svg{width:1.15rem;height:1.15rem}
+/* links do rodape com area de toque de 44px no celular/tablet (o espacamento vem da propria altura do link) */
+@media (max-width:1023px){
+  .footer ul{gap:0}
+  .footer li a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+}
 .footer__bottom{border-top:1px solid var(--line-dark)}
 .footer__bottom div{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;justify-content:space-between;padding-block:1.3rem;font-size:.76rem;color:rgba(255,255,255,.45)}
 @media (min-width:700px){ .footer__grid{grid-template-columns:repeat(2,1fr)} }

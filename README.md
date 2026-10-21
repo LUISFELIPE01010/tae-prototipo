@@ -88,7 +88,7 @@ tae-site/
         ├── hero-usinagem-*.webp/.avif foto da hero (5 tamanhos)
         ├── usinagem / caldeiraria / manutencao   cards de Nossa Atuação (3 tamanhos)
         ├── sobre-oficina, faixa-industrial
-        ├── projetos/                  34 fotos reais da galeria (.webp + .avif)
+        ├── projetos/                  39 fotos reais da galeria (.webp + .avif)
         └── parceiros/                 13 logos de clientes
 ```
 
@@ -119,12 +119,17 @@ deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, 
 | `faixa-industrial-720/1100/1920` | 21:9 | faixa "Como trabalhamos" |
 | `logo-tae-mark(-light)-120/200` e o de 440 | — | logo (só `.webp`, tem transparência) |
 
-A galeria de **Projetos** já usa fotos reais da TAE (34 fotos em `projetos/`, 27 de caldeiraria e 7 de
-usinagem, cada uma em 800 px e 480 px, proporção 4:3, em `.webp` e `.avif`). Para adicionar uma foto nova,
-gere os dois tamanhos nos dois formatos, copie para `assets/img/projetos/` e acrescente um `<figure>` em
-`index.html` dentro de `<div id="galeria">`, com `data-cat="usinagem"` ou `data-cat="caldeiraria"`
-(copie um `<figure>` existente, que já traz o `<picture>`). A galeria mostra 9 fotos por vez; o botão
-"Ver mais projetos" revela as demais (o tamanho do lote está em `data-inicial`).
+A galeria de **Projetos** já usa fotos reais da TAE (39 fotos em `projetos/`: 27 de caldeiraria, 7 de
+usinagem e 5 de manutenção, cada uma em 800 px e 480 px, proporção 4:3, em `.webp` e `.avif`). Para
+adicionar uma foto nova, gere os dois tamanhos nos dois formatos, copie para `assets/img/projetos/` e
+acrescente um `<figure>` em `index.html` dentro de `<div id="galeria">`, com `data-cat="usinagem"`,
+`data-cat="caldeiraria"` ou `data-cat="manutencao"` (copie um `<figure>` existente, que já traz o
+`<picture>`). Os botões de filtro (Todos, Usinagem, Caldeiraria, Manutenção) são lidos do `data-cat`; para uma
+categoria nova, acrescente um `<button class="filtro" data-filtro="...">`. A galeria mostra 9 fotos por vez;
+o botão "Ver mais projetos" revela as demais (o tamanho do lote está em `data-inicial`).
+
+As fotos do card "Manutenção Industrial" (técnico de uniforme) e da seção "Sobre" (fachada da empresa) são da
+própria TAE: `manutencao-480/700/900` e `sobre-oficina-480/700/1100`.
 
 ### Perguntas frequentes e schema
 O FAQ fica em `<section id="faq">`. O mesmo texto também está no JSON-LD do `<head>` (`FAQPage`). Ao editar uma
