@@ -153,9 +153,7 @@ p{margin:0}
 .wa-pill:hover{background:var(--g-700);transform:translateY(-1px)}
 .wa-pill__ico{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--g-800);flex:none}
 .wa-pill__ico svg{width:24px;height:24px}
-.wa-pill__txt{display:grid;line-height:1.2}
-.wa-pill__txt small{font-size:.78rem;opacity:.9;font-weight:500}
-.wa-pill__txt b{font-size:1.12rem;font-weight:700;letter-spacing:.01em}
+.wa-pill__txt{font-size:1.05rem;font-weight:700;line-height:1.2;letter-spacing:.01em;white-space:nowrap}
 .wa-pill__arrow{width:22px;height:22px;margin-left:.9rem;stroke-width:2.2}
 
 .burger{display:grid;place-items:center;width:46px;height:46px;margin-left:auto;color:var(--ink);flex:none}

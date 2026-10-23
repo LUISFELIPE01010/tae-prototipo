@@ -37,7 +37,7 @@ Cada `git push` na `main` republica o site sozinho. Não é preciso mexer nas co
 | Etapa | Por quê |
 |---|---|
 | **CSS crítico inline** — as seções 1–7 e 19 do `styles.css` (cabeçalho, hero, faixa, Nossa Atuação e animações) são minificadas e vão dentro do HTML; o resto (`rest.css`) carrega sem bloquear a primeira tela | tira o CSS do caminho crítico da renderização |
-| **Hash no nome dos arquivos** (`hero-usinagem-800.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
+| **Hash no nome dos arquivos** (`hero-peca-800.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
 | **Confere o JSON-LD** e compara o FAQ do schema com o FAQ visível | avisa (sem travar o deploy) se um dos dois ficou diferente |
 
 Por causa do hash, **trocar uma foto continua simples**: substitua o arquivo mantendo o mesmo nome e faça o push.
@@ -85,10 +85,10 @@ tae-site/
     └── img/
         ├── logo-tae-mark*.webp        logo (3 tamanhos; versão clara para o rodapé)
         ├── logo-tae-completo.webp     logo com os 3 dizeres (usada no schema)
-        ├── hero-usinagem-*.webp/.avif foto da hero (5 tamanhos)
+        ├── hero-peca-*.webp/.avif foto da hero (5 tamanhos)
         ├── usinagem / caldeiraria / manutencao   cards de Nossa Atuação (3 tamanhos)
         ├── sobre-oficina, faixa-industrial
-        ├── projetos/                  38 fotos reais da galeria (.webp + .avif)
+        ├── projetos/                  39 fotos reais da galeria (.webp + .avif)
         └── parceiros/                 13 logos de clientes
 ```
 
@@ -111,7 +111,7 @@ deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, 
 
 | Arquivos | Proporção | Onde aparece |
 |---|---|---|
-| `hero-usinagem-640/800/1000/1280/1600` | 16:9 | topo do site |
+| `hero-peca-640/800/1000/1280/1600` | 16:9 | topo do site (peça industrial com a placa da TAE) |
 | `usinagem-480/700/900` | 4:3 | card "Usinagem" |
 | `caldeiraria-480/700/900` | 4:3 | card "Caldeiraria" |
 | `manutencao-480/700/900` | 4:3 | card "Manutenção Industrial" |
@@ -119,7 +119,7 @@ deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, 
 | `faixa-industrial-720/1100/1920` | 21:9 | faixa "Como trabalhamos" |
 | `logo-tae-mark(-light)-120/200` e o de 440 | — | logo (só `.webp`, tem transparência) |
 
-A galeria de **Projetos** já usa fotos reais da TAE (38 fotos em `projetos/`: 27 de caldeiraria, 7 de
+A galeria de **Projetos** já usa fotos reais da TAE (39 fotos em `projetos/`: 28 de caldeiraria, 7 de
 usinagem e 4 de manutenção, cada uma em 800 px e 480 px, proporção 4:3, em `.webp` e `.avif`). Para
 adicionar uma foto nova, gere os dois tamanhos nos dois formatos, copie para `assets/img/projetos/` e
 acrescente um `<figure>` em `index.html` dentro de `<div id="galeria">`, com `data-cat="usinagem"`,
