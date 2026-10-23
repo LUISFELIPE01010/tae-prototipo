@@ -250,4 +250,14 @@
       "noopener"
     );
   });
+
+  /* ---------- Hero: video decorativo ---------- */
+  // pausa quando sai da tela (poupa bateria e processador); respeita "reduzir movimento" e economia de dados
+  (function () {
+    var v = document.querySelector(".hero__video");
+    if (!v || v.dataset.parado === "1" || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
+    }, { threshold: 0.05 }).observe(v);
+  })();
 })();

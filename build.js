@@ -94,7 +94,7 @@ for (const [rel, buf] of conteudos) {
   mapa.set(rel, rel.slice(0, -ext.length) + '.' + hash(buf) + ext);
 }
 const naoEncontrados = new Set();
-const reescrever = (texto) => texto.replace(/assets\/[A-Za-z0-9_\-./]+?\.(?:webp|avif|png|jpe?g|svg|woff2|css|js)(?![A-Za-z0-9_\-])/g, (m) => {
+const reescrever = (texto) => texto.replace(/assets\/[A-Za-z0-9_\-./]+?\.(?:webp|avif|png|jpe?g|svg|woff2|mp4|css|js)(?![A-Za-z0-9_\-])/g, (m) => {
   if (mapa.has(m)) return mapa.get(m);
   naoEncontrados.add(m);
   return m;

@@ -187,7 +187,7 @@ p{margin:0}
 /* ---------- 5. Hero ---------- */
 .hero{position:relative;display:flex;flex-direction:column;background:var(--ink);color:#fff;margin-top:var(--header-h);overflow:hidden;isolation:isolate}
 .hero__media{position:relative;width:100%;aspect-ratio:16/9}
-.hero__media img{width:100%;height:100%;object-fit:cover}
+.hero__media img,.hero__media video{display:block;width:100%;height:100%;object-fit:cover;background:var(--ink)}
 /* no mobile a foto vem depois do texto: degrade no topo para costurar com o bloco escuro */
 .hero__media::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(23,23,23,.92),rgba(23,23,23,0) 48%)}
 .hero__inner{order:-1}
@@ -210,8 +210,8 @@ p{margin:0}
      senao ela seria esticada na largura toda da hero e apareceria com zoom */
   .hero__media{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;z-index:0;
     clip-path:polygon(var(--diag-top) 0,100% 0,100% 100%,var(--diag-bottom) 100%)}
-  .hero__media img{position:absolute;top:0;bottom:0;right:0;width:62%;height:100%;
-    object-fit:cover;object-position:50% 55%}
+  .hero__media img,.hero__media video{position:absolute;top:0;bottom:0;right:0;width:62%;height:100%;
+    object-fit:cover;object-position:50% 50%}
   .hero__media::after{display:none}
   .hero__edge{
     display:block;position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--g-500);

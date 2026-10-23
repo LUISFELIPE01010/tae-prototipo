@@ -37,7 +37,7 @@ Cada `git push` na `main` republica o site sozinho. Não é preciso mexer nas co
 | Etapa | Por quê |
 |---|---|
 | **CSS crítico inline** — as seções 1–7 e 19 do `styles.css` (cabeçalho, hero, faixa, Nossa Atuação e animações) são minificadas e vão dentro do HTML; o resto (`rest.css`) carrega sem bloquear a primeira tela | tira o CSS do caminho crítico da renderização |
-| **Hash no nome dos arquivos** (`hero-peca-800.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
+| **Hash no nome dos arquivos** (`usinagem-700.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
 | **Confere o JSON-LD** e compara o FAQ do schema com o FAQ visível | avisa (sem travar o deploy) se um dos dois ficou diferente |
 
 Por causa do hash, **trocar uma foto continua simples**: substitua o arquivo mantendo o mesmo nome e faça o push.
@@ -85,7 +85,8 @@ tae-site/
     └── img/
         ├── logo-tae-mark*.webp        logo (3 tamanhos; versão clara para o rodapé)
         ├── logo-tae-completo.webp     logo com os 3 dizeres (usada no schema)
-        ├── hero-peca-*.webp/.avif foto da hero (5 tamanhos)
+        ├── hero-poster.webp           quadro de abertura do vídeo da hero (aparece antes de o vídeo carregar)
+        ├── video/hero-oficina.mp4     vídeo da hero (9 s, 854x480, mudo, em loop, 317 kB)
         ├── usinagem / caldeiraria / manutencao   cards de Nossa Atuação (3 tamanhos)
         ├── sobre-oficina, faixa-industrial
         ├── projetos/                  39 fotos reais da galeria (.webp + .avif)
@@ -111,7 +112,7 @@ deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, 
 
 | Arquivos | Proporção | Onde aparece |
 |---|---|---|
-| `hero-peca-640/800/1000/1280/1600` | 16:9 | topo do site (peça industrial com a placa da TAE) |
+| `hero-poster` | 16:9 (854x480) | quadro de abertura da hero (também é o LCP) |
 | `usinagem-480/700/900` | 4:3 | card "Usinagem" |
 | `caldeiraria-480/700/900` | 4:3 | card "Caldeiraria" |
 | `manutencao-480/700/900` | 4:3 | card "Manutenção Industrial" |
@@ -213,3 +214,22 @@ trocando apenas o trecho final de `assets/js/main.js`.
   Para animar um bloco novo, use a classe `reveal` (opcional: `reveal--left` ou `reveal--right`) ou o
   atributo `data-stagger` no contêiner de uma grade. Quem usa "reduzir movimento" no sistema vê tudo
   sem animação, e se o JavaScript falhar o conteúdo continua visível.
+
+## Vídeo da hero
+
+O topo da página tem um vídeo curto, **mudo e em loop**, no lugar da foto: `assets/video/hero-oficina.mp4`
+(9,2 s, 854x480, H.264, 20 quadros por segundo, 317 kB). Ele toca sozinho no celular e no computador e foi feito
+para ser leve (um GIF equivalente passaria de 10 MB).
+
+- **Quadro de abertura:** `assets/img/hero-poster.webp` (16 kB) aparece na hora, antes de o vídeo carregar. É ele que conta
+  para a velocidade (LCP). Se o navegador bloquear o autoplay (ex.: economia de bateria no iPhone), o visitante vê só ele.
+- **Quem pediu "reduzir movimento"** no aparelho ou usa o **modo economia de dados** vê só o quadro de abertura e o vídeo
+  nem é baixado (o endereço do vídeo é entregue pelo pequeno `<script>` logo depois da tag `<video>` no `index.html`).
+- **Pausa fora da tela** (`main.js`), para poupar bateria, e volta a tocar ao rolar de volta ao topo.
+- **Origem das imagens:** 3 trechos de vídeos genéricos do [Mixkit](https://mixkit.co/) (licença gratuita, sem marca d'água e sem
+  obrigação de dar crédito): torno cortando metal (nº 21487, usinagem), soldador (nº 21082, caldeiraria) e mãos ajustando uma
+  máquina industrial (nº 17675, manutenção). Nenhum mostra logotipo ou texto de empresa. Edição: cortes de 3,4 s com
+  transição suave de 0,5 s, o fim emenda com o começo para o loop não dar "tranco".
+- **Para trocar o vídeo:** gere outro MP4 sem áudio (`-an`), em H.264, 16:9, com `-movflags +faststart`, e de preferência abaixo de
+  500 kB; salve em `assets/video/hero-oficina.mp4` e gere o primeiro quadro como `hero-poster.webp` (854x480). O resto
+  (hash, cache de 1 ano, build) é automático.
