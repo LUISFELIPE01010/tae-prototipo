@@ -126,8 +126,9 @@ html = html.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script
 const trocaDominio = (t) => (SITE === PLACEHOLDER ? t : t.split(PLACEHOLDER).join(SITE));
 html = trocaDominio(html);
 fs.writeFileSync(path.join(OUT, 'index.html'), html);
-for (const f of ['robots.txt', 'sitemap.xml', 'llms.txt']) {
-  if (fs.existsSync(path.join(ROOT, f))) fs.writeFileSync(path.join(OUT, f), trocaDominio(lerTexto(f)));
+for (const f of ['robots.txt', 'sitemap.xml', 'llms.txt', '404.html']) {
+  // reescrever(): o sitemap cita a imagem com o nome ja com hash (senao daria 404)
+  if (fs.existsSync(path.join(ROOT, f))) fs.writeFileSync(path.join(OUT, f), trocaDominio(reescrever(lerTexto(f))));
   else avisos.push(f + ' nao existe na raiz do projeto');
 }
 

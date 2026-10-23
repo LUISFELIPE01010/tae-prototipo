@@ -9,22 +9,174 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/sobre-nos",
+      "destination": "/#sobre",
+      "permanent": true
+    },
+    {
+      "source": "/sobre",
+      "destination": "/#sobre",
+      "permanent": true
+    },
+    {
+      "source": "/quem-somos",
+      "destination": "/#sobre",
+      "permanent": true
+    },
+    {
+      "source": "/empresa",
+      "destination": "/#sobre",
+      "permanent": true
+    },
+    {
+      "source": "/a-empresa",
+      "destination": "/#sobre",
+      "permanent": true
+    },
+    {
+      "source": "/usinagem",
+      "destination": "/#servico-usinagem",
+      "permanent": true
+    },
+    {
+      "source": "/servicos/usinagem",
+      "destination": "/#servico-usinagem",
+      "permanent": true
+    },
+    {
+      "source": "/caldeiraria",
+      "destination": "/#servico-caldeiraria",
+      "permanent": true
+    },
+    {
+      "source": "/servicos/caldeiraria",
+      "destination": "/#servico-caldeiraria",
+      "permanent": true
+    },
+    {
+      "source": "/manutencao-industrial",
+      "destination": "/#servico-manutencao",
+      "permanent": true
+    },
+    {
+      "source": "/manutencao",
+      "destination": "/#servico-manutencao",
+      "permanent": true
+    },
+    {
+      "source": "/servicos/manutencao-industrial",
+      "destination": "/#servico-manutencao",
+      "permanent": true
+    },
+    {
+      "source": "/servicos",
+      "destination": "/#servicos",
+      "permanent": true
+    },
+    {
+      "source": "/nossos-servicos",
+      "destination": "/#servicos",
+      "permanent": true
+    },
+    {
+      "source": "/projetos",
+      "destination": "/#projetos",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/#projetos",
+      "permanent": true
+    },
+    {
+      "source": "/galeria",
+      "destination": "/#projetos",
+      "permanent": true
+    },
+    {
+      "source": "/trabalhos",
+      "destination": "/#projetos",
+      "permanent": true
+    },
+    {
+      "source": "/clientes",
+      "destination": "/#clientes",
+      "permanent": true
+    },
+    {
+      "source": "/parceiros",
+      "destination": "/#clientes",
+      "permanent": true
+    },
+    {
+      "source": "/contato",
+      "destination": "/#contato",
+      "permanent": true
+    },
+    {
+      "source": "/fale-conosco",
+      "destination": "/#contato",
+      "permanent": true
+    },
+    {
+      "source": "/orcamento",
+      "destination": "/#contato",
+      "permanent": true
+    },
+    {
+      "source": "/solicite-orcamento",
+      "destination": "/#contato",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/inicio",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
