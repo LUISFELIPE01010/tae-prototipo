@@ -1,6 +1,6 @@
 # TAE - Usinagem, Caldeiraria e Manutenção Industrial
 
-> A TAE é uma empresa de usinagem industrial, caldeiraria e manutenção industrial com sede em Cubatão/SP e atuação principal na Baixada Santista. Foi idealizada por três engenheiros com mais de 20 anos de experiência no setor industrial e atende os segmentos de energia, petroquímico, siderúrgico, portuário e logística, mineração e papel e celulose.
+> A TAE é uma empresa de usinagem industrial, caldeiraria e manutenção industrial com sede em Cubatão/SP, atuação principal na Baixada Santista e atendimento em todo o Brasil. Foi idealizada por três engenheiros com mais de 20 anos de experiência no setor industrial e atende os segmentos de energia, petroquímico, siderúrgico, portuário e logística, mineração e papel e celulose.
 
 ## Serviços
 
@@ -17,11 +17,11 @@ Energia, petroquímico, siderúrgico, portuário e logística, mineração, pape
 
 ## Clientes e parceiros
 
-Bunge, Costa Brasil, AVB (Aço Verde do Brasil), Cobra Brasil, Yara, Copabo Infra, VLI, Petrocoque, Mafro Transportes, Siemens Gamesa, Melt, Siner e Geoambiente.
+Bunge, Costa Brasil, AVB (Aço Verde do Brasil), Cobra Brasil, Yara, Copabo Infra, VLI, Petrocoque, Mafro Transportes, Siemens Gamesa, Melt, Siner, Geoambiente, Grupo Cesari, CMOC, Gerdau, Piatec e Actemium (lista parcial: estas são algumas das empresas atendidas).
 
 ## Região de atendimento
 
-Sede em Cubatão/SP. Atuação principal na Baixada Santista. Atendimento também em outras cidades do estado de São Paulo, conforme a necessidade e a disponibilidade da equipe, inclusive para manutenção corretiva emergencial.
+Sede em Cubatão/SP. Atuação principal na Baixada Santista. Atendimento também em todo o Brasil, conforme a necessidade e a disponibilidade da equipe, inclusive para manutenção corretiva emergencial.
 
 ## Contato
 

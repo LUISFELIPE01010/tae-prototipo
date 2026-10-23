@@ -411,6 +411,8 @@ p{margin:0}
 .parceiro img{max-height:54px;width:auto;max-width:min(100%,160px);object-fit:contain;
   opacity:.88;transition:opacity .3s ease,transform .3s ease}
 .parceiro:hover img{opacity:1;transform:scale(1.05)}
+/* logos com desenho mais fino (AVB, Copabo, Petrocoque): um pouco maiores para ficarem proporcionais aos outros */
+.parceiro--maior img{max-height:78px;max-width:min(100%,180px)}
 @media (min-width:560px){ .parceiro{flex-basis:calc(33.3333% - 1px)} }
 @media (min-width:900px){ .parceiro{flex-basis:calc(20% - 1px);min-height:122px} }
 
