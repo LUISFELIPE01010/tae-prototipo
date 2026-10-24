@@ -250,28 +250,4 @@
       "noopener"
     );
   });
-
-  /* ---------- Hero: video decorativo ---------- */
-  // - pausa quando sai da tela (poupa bateria e processador);
-  // - se a internet for lenta e o video travar, pausa, deixa carregar uns 8 s a frente e so entao continua (sem engasgos);
-  // - quem pediu "reduzir movimento" ou usa economia de dados nem chega aqui (veja o <script> logo apos o <video>)
-  (function () {
-    var v = document.querySelector(".hero__video");
-    if (!v || v.dataset.parado === "1") return;
-    var aguardando = false;
-    function tocar() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-    function seguir() {
-      var b = v.buffered, ate = b.length ? b.end(b.length - 1) : 0;
-      if (ate - v.currentTime >= 8 || ate >= v.duration - 0.5) { aguardando = false; v.removeEventListener("progress", seguir); if (!document.hidden) tocar(); }
-    }
-    v.addEventListener("waiting", function () {
-      if (aguardando || v.paused || v.currentTime < 0.1) return;
-      aguardando = true; v.pause(); v.addEventListener("progress", seguir); seguir();
-    });
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (en) {
-        if (en[0].isIntersecting) { if (!aguardando) tocar(); } else { v.pause(); }
-      }, { threshold: 0.05 }).observe(v);
-    }
-  })();
 })();

@@ -37,7 +37,7 @@ Cada `git push` na `main` republica o site sozinho. Não é preciso mexer nas co
 | Etapa | Por quê |
 |---|---|
 | **CSS crítico inline** — as seções 1–7 e 19 do `styles.css` (cabeçalho, hero, faixa, Nossa Atuação e animações) são minificadas e vão dentro do HTML; o resto (`rest.css`) carrega sem bloquear a primeira tela | tira o CSS do caminho crítico da renderização |
-| **Hash no nome dos arquivos** (`usinagem-700.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
+| **Hash no nome dos arquivos** (`hero-usinagem-800.7a413d9ba0.avif`) | permite cache de **1 ano** (`immutable`) com segurança: se a foto mudar, o nome muda |
 | **Confere o JSON-LD** e compara o FAQ do schema com o FAQ visível | avisa (sem travar o deploy) se um dos dois ficou diferente |
 
 Por causa do hash, **trocar uma foto continua simples**: substitua o arquivo mantendo o mesmo nome e faça o push.
@@ -85,8 +85,7 @@ tae-site/
     └── img/
         ├── logo-tae-mark*.webp        logo (3 tamanhos; versão clara para o rodapé)
         ├── logo-tae-completo.webp     logo com os 3 dizeres (usada no schema)
-        ├── hero-poster.webp           quadro de abertura do vídeo da hero (aparece antes de o vídeo carregar)
-        ├── video/hero-oficina.mp4     vídeo da hero (24,6 s, 1280x720, mudo, em loop, 3 MB)
+        ├── hero-usinagem-*.webp/.avif foto da hero (5 tamanhos)
         ├── usinagem / caldeiraria / manutencao   cards de Nossa Atuação (3 tamanhos)
         ├── sobre-oficina, faixa-industrial
         ├── projetos/                  39 fotos reais da galeria (.webp + .avif)
@@ -112,7 +111,7 @@ deixa o `.avif` antigo aparecendo para a maioria dos visitantes. *(Se preferir, 
 
 | Arquivos | Proporção | Onde aparece |
 |---|---|---|
-| `hero-poster` | 16:9 (1280x720) | quadro de abertura da hero (também é o LCP) |
+| `hero-usinagem-640/800/1000/1280/1600` | 16:9 | topo do site |
 | `usinagem-480/700/900` | 4:3 | card "Usinagem" |
 | `caldeiraria-480/700/900` | 4:3 | card "Caldeiraria" |
 | `manutencao-480/700/900` | 4:3 | card "Manutenção Industrial" |
@@ -214,23 +213,3 @@ trocando apenas o trecho final de `assets/js/main.js`.
   Para animar um bloco novo, use a classe `reveal` (opcional: `reveal--left` ou `reveal--right`) ou o
   atributo `data-stagger` no contêiner de uma grade. Quem usa "reduzir movimento" no sistema vê tudo
   sem animação, e se o JavaScript falhar o conteúdo continua visível.
-
-## Vídeo da hero
-
-O topo da página tem um vídeo curto, **mudo e em loop**, no lugar da foto: `assets/video/hero-oficina.mp4`
-(24,6 s, **1280x720 (720p)**, H.264, 25 quadros por segundo, 3 MB). Ele toca sozinho no celular e no computador. É
-bem mais leve que um GIF equivalente (que passaria de 50 MB) e tem qualidade HD.
-
-- **Quadro de abertura:** `assets/img/hero-poster.webp` (31 kB) aparece na hora, antes de o vídeo carregar. É ele que conta
-  para a velocidade (LCP). Se o navegador bloquear o autoplay (ex.: economia de bateria no iPhone), o visitante vê só ele.
-- **Quem pediu "reduzir movimento"** no aparelho ou usa o **modo economia de dados** vê só o quadro de abertura e o vídeo
-  nem é baixado (o endereço do vídeo é entregue pelo pequeno `<script>` logo depois da tag `<video>` no `index.html`).
-- **Pausa fora da tela** (`main.js`), para poupar bateria, e volta a tocar ao rolar de volta ao topo.
-- **Origem das imagens:** 6 trechos de vídeos genéricos do [Mixkit](https://mixkit.co/) (licença gratuita, sem marca d'água e sem
-  obrigação de dar crédito), todos em 1280x720 nativo: torno cortando metal (nº 21487), soldador (nº 21082), mãos ajustando uma
-  máquina industrial (nº 17675), torno em plano aberto (nº 2241), soldagem de estrutura em fábrica (nº 47755) e medição de uma
-  peça no torno (nº 2235). Alternam usinagem, caldeiraria e manutenção. Nenhum mostra logotipo ou texto de empresa.
-  Edição: cortes de 4,6 s com transição suave de 0,6 s; o fim emenda com o começo para o loop não dar "tranco".
-- **Para trocar o vídeo:** gere outro MP4 sem áudio (`-an`), em H.264, 16:9, com `-movflags +faststart`, e de preferência abaixo de
-  4 MB (CRF 27 a 28 mantém boa nitidez); salve em `assets/video/hero-oficina.mp4` e gere o primeiro quadro como `hero-poster.webp` (1280x720). O resto
-  (hash, cache de 1 ano, build) é automático.

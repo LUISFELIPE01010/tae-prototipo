@@ -12,7 +12,7 @@ const TIPOS = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8',
   '.webp': 'image/webp', '.avif': 'image/avif', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml',
-  '.woff2': 'font/woff2', '.mp4': 'video/mp4',
+  '.woff2': 'font/woff2',
 };
 const COMPRIMIVEL = new Set(['.html', '.css', '.js', '.json', '.xml', '.txt', '.svg']);
 
@@ -25,17 +25,6 @@ http.createServer((req, res) => {
   const ext = path.extname(f).toLowerCase();
   const comHash = /\.[0-9a-f]{10}\./.test(path.basename(f));
   const cab = { 'Content-Type': TIPOS[ext] || 'application/octet-stream', 'Cache-Control': comHash ? 'public, max-age=31536000, immutable' : 'no-store' };
-  // video: suporte a Range (o navegador pede pedacos do arquivo), como na Vercel
-  if (ext === '.mp4') {
-    const tam = fs.statSync(f).size, m = /bytes=(d*)-(d*)/.exec(String(req.headers.range || ''));
-    if (m) {
-      const ini = m[1] ? +m[1] : 0, fim = m[2] ? Math.min(+m[2], tam - 1) : tam - 1;
-      res.writeHead(206, { ...cab, 'Accept-Ranges': 'bytes', 'Content-Range': 'bytes ' + ini + '-' + fim + '/' + tam, 'Content-Length': fim - ini + 1 });
-      return fs.createReadStream(f, { start: ini, end: fim }).pipe(res);
-    }
-    res.writeHead(200, { ...cab, 'Accept-Ranges': 'bytes', 'Content-Length': tam });
-    return fs.createReadStream(f).pipe(res);
-  }
   const aceita = String(req.headers['accept-encoding'] || '');
   const leitura = fs.createReadStream(f);
 
